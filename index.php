@@ -6,6 +6,13 @@ include('lib/smarty/libs/Smarty.class.php');
 // create object
 $smarty = new Smarty;
 
+//db
+$host = $config['database']['host'];
+$user = $config['database']['user'];
+$pass = $config['database']['pass'];
+$db = $config['database']['db'];
+$conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+
 // assign some content. This would typically come from
 // a database or other source, but we'll use static
 // values for the purpose of this example.
