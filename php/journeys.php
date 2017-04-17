@@ -22,6 +22,14 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	$journey['start'] = $row['start'];
 	$journey['end'] = $row['end'];
 	
+	$time = ($row['end'] - $row['start']);
+	$hours = floor($time / (60 * 60));
+	$mins = floor( ($time / 60) % 60);
+	$secs = $time % 60;
+	
+	
+	$journey['duration'] = "$hours h $mins m $secs s";
+	
 	$journeys[$row['id']] = $journey;
 }
 
