@@ -11,5 +11,10 @@ $smarty = new Smarty;
 $smarty->assign('name', 'george smith');
 $smarty->assign('address', '45th & Harris');
 
-// display it
-$smarty->display('index.tpl');
+$path = isset($_GET['path']) ? $_GET['path'] : 'index';
+
+if (file_exists('php/'.$path.'.php')) {
+	require_once('php/'.$path.'.php');
+} else {
+	require_once('php/404.php');
+}
