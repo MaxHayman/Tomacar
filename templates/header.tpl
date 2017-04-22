@@ -53,6 +53,8 @@
                 <ul class="dropdown-menu">
                   {if !$user}
                   <li><a href="/login">Login</a></li>
+				  <li role="separator" class="divider"></li>
+                  <li><a href="/register">Register</a></li>
                   {else}
 
                   <li><a href="/account">View Account Details</a></li>

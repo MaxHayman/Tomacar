@@ -22,6 +22,10 @@
 					<label>
 						<input type="checkbox" value="remember-me"> Remember me
 					</label>
+					
+					<label>
+						<div><a href="/register">Don't have an account? Register today!</a></div>
+					</label>
 				</div>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 			
