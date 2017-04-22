@@ -1,5 +1,12 @@
 <?php
-$id = 1;
+
+if(!$user) {
+	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> You need to log in.';
+	Header('Location: /login');
+}
+
+$id = $user['id'];
+
 $stmt = $conn->query('SELECT
 journey.id,
 st.`name` as st,
@@ -12,7 +19,7 @@ journey
 INNER JOIN stations st ON journey.`from` = st.id
 INNER JOIN stations en ON journey.`to` = en.id
 WHERE
-journey.`user` = 1
+journey.`user` = '.$id.'
 ');
 $journeys = array();
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
