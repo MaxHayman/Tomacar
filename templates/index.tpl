@@ -69,13 +69,21 @@
 					  map.setZoom(15);
 					  map.setCenter(marker.getPosition());
 					  
+					  var button = '';
+
+					  if(marker.count > 0) {
+					  	button = '<a href="/journeys/start?start=' + marker.id + '" class="btn btn-primary">Start Journey</a>';
+					  } else {
+					  	button = '<b>Sorry no cars here</b>';
+					  }
+
 					  document.getElementById("locations").innerHTML = `
 					  	<p>
 					<b><u>` + marker.name + `</u></b>
 					<br />
 					Capacity: ` + marker.count + `/` + marker.capacity + `
 					<br />
-					
+					` + button + `
 					  `;
 					});
 					
