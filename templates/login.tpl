@@ -5,7 +5,7 @@
 	  
         <div class="container">
 
-		  <form class="form-signin">
+		  <form class="form-signin" method="POST">
 			<h1 class="text-center"> Tomacar </h1>
 			<h2 class="text-center">Please sign in</h2></br>
 		
@@ -13,10 +13,10 @@
 				<div class="col-md-4">&nbsp;</div>
 				<div class="col-md-4">
 						<label for="inputEmail" class="sr-only">Email address</label>
-						<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+						<input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 						<br />
 						<label for="inputPassword" class="sr-only">Password</label>
-						<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+						<input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
 						
 					<div class="checkbox">
 					<label>

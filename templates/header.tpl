@@ -51,11 +51,16 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
                 <ul class="dropdown-menu">
+                  {if !$user}
+                  <li><a href="/login">Login</a></li>
+                  {else}
+
                   <li><a href="/account">View Account Details</a></li>
                   <li><a href="/journeys">View Journeys</a></li>
                   <li role="separator" class="divider"></li>
                   
-                  <li><a href="#">Logout</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                  {/if}
                 </ul>
               </li>
             </ul>
