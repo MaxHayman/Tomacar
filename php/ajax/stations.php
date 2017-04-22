@@ -6,7 +6,7 @@ stations.`name`,
 stations.capacity,
 stations.lat,
 stations.lng,
-count(stations.id) as count
+sum(case when cars.id IS NOT NULL then 1 else 0 end) as count
 FROM
 stations
 LEFT JOIN cars ON stations.id = cars.station
