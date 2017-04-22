@@ -72,3 +72,11 @@
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
+
+        <div class="col-lg-12">
+         {foreach from=$messages key=k item=v}
+         <div class="alert alert-{$k}">
+          {$v}
+        </div>
+      {/foreach}
+            </div>

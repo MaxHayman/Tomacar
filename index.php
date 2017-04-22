@@ -45,6 +45,11 @@ users.id = :id LIMIT 1');
 $smarty->assign('title', $config['website']['title']);
 $smarty->assign('user', $user);
 
+// System messages
+$messages = isset($_SESSION["messages"]) ? $_SESSION["messages"] : array() ;
+$_SESSION["messages"] = array();
+$smarty->assign('messages', $messages);
+
 $path = isset($_GET['path']) ? $_GET['path'] : 'index';
 
 if (file_exists('php/'.$path.'.php')) {

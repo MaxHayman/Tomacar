@@ -31,6 +31,7 @@ users.email = :email LIMIT 1');
 	if(password_verify($_POST['inputPassword'], $row['password'])) {
 		session_regenerate_id(true);
 		$_SESSION['id'] = $row['id'];
+		$_SESSION["messages"]['success'] = '<strong>Success!</strong> You have logged in.';
 		Header('Location: /');
 	}
 }
