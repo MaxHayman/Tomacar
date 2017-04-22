@@ -5,6 +5,7 @@ include('lib/smarty/libs/Smarty.class.php');
 
 // create object
 $smarty = new Smarty;
+$user = null;
 
 //db
 $host = $config['database']['host'];
@@ -13,11 +14,41 @@ $pass = $config['database']['pass'];
 $db = $config['database']['db'];
 $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
 
-// assign some content. This would typically come from
-// a database or other source, but we'll use static
-// values for the purpose of this example.
+// Logged in
+session_start();
+if(isset($_SESSION['id'])) {
+		$stmt = $conn->prepare('SELECT
+users.id,
+users.email,
+users.`password`,
+users.firstName,
+users.lastName
+FROM
+users
+WHERE
+users.id = :id LIMIT 1');
+
+	$stmt->bindParam(':id', $_SESSION['id']);
+	
+    $result = $stmt->execute();
+
+    if(!$result) {
+		echo "Error"; die;
+	}
+
+	$row = $stmt->fetch(PDO::FETCH_ASSOC);
+	$user = $row;
+} else {
+	$user = false;
+}
+
 $smarty->assign('title', $config['website']['title']);
-$smarty->assign('address', '45th & Harris');
+$smarty->assign('user', $user);
+
+// System messages
+$messages = isset($_SESSION["messages"]) ? $_SESSION["messages"] : array() ;
+$_SESSION["messages"] = array();
+$smarty->assign('messages', $messages);
 
 $path = isset($_GET['path']) ? $_GET['path'] : 'index';
 
