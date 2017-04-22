@@ -57,7 +57,7 @@ FROM
 journey as j
 INNER JOIN stations as f ON j.`from` = f.id
 INNER JOIN stations as t ON t.id = j.`to`
-WHERE j.id = 1 LIMIT 1');
+WHERE j.id = '.$_GET['id'].' LIMIT 1');
 
 $row = $jd->fetch(PDO::FETCH_ASSOC);
 	$detail = array();
