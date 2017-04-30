@@ -45,7 +45,7 @@ if($suggestions) {
 	WHERE s.id <> '.$_GET['start'].'
 	GROUP BY
 	s.id
-	HAVING distance < 25
+	HAVING distance < 0.6
 	ORDER BY distance';
 
 	$stmt = $conn->query($closest);

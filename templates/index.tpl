@@ -16,6 +16,11 @@
 		<div class="col-md-4">
 			<div id="locations" class="jumbotron">
 				<p><b>Loading...</b>
+				{foreach from=$stations key=count item=count}
+					<tr>
+						<td><a href="/journeys/start?start={$count}"><img src="/images/carbutton.jpg"></a></td>
+					</tr>
+				{/foreach}
 				</p>
 				
 			</div>
@@ -36,10 +41,18 @@
 				// Create an array of alphabetical characters used to label the markers.
 				var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 				
+				//Initialise the map
 				var map = new google.maps.Map(document.getElementById('map'), {
-				  zoom: 11,
-				  center: {lat: 50.935807, lng: -1.396226} 
+				  zoom: 13, 
 				});
+				
+				// Center on the users location
+				if (navigator.geolocation) {
+					 navigator.geolocation.getCurrentPosition(function (position) {
+						 initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+						 map.setCenter(initialLocation);
+						});
+					}
 				
 				map.addListener('zoom_changed', function() {
 					zoomLevel = map.getZoom();
