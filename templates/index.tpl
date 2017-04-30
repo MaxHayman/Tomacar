@@ -33,7 +33,7 @@
 
       	var styles = [];
 
-      	{/literal}{if $journey}{literal}
+      	{/literal}{if $journey && $user}{literal}
       		styles = [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -158,7 +158,7 @@
 
 					var count;
 
-					{/literal}{if !$journey}{literal}
+					{/literal}{if !$journey || !$user}{literal}
 					for(count = 0; count < element.count; count++){
 						text += "<i class='fa fa-car' aria-hidden='true'></i>";
 					}
@@ -185,7 +185,7 @@
 					  
 					  var button = '';
 
-					  {/literal}{if $journey}{literal}
+					  {/literal}{if $journey && $user}{literal}
 					  if(Number(marker.count) < Number(marker.capacity)) {
 					  	button = '<a href="/journeys/end?end=' + marker.id + '" class="btn btn-primary">End Journey</a>';
 					  } else {

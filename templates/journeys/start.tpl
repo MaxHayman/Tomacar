@@ -26,7 +26,10 @@
         {/if}
 		{if ($station.count / $station.capacity) >= 0.25}
 				<p> 
-					<a class="btn btn-lg btn-primary" href="#" role="button">Commence Journey</a>
+				<form method="POST">
+									<input type="hidden" name="start" value="{$station.id}">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Commence Journey</button>
+					</form>
 				</p>
 				{/if}
       </div>

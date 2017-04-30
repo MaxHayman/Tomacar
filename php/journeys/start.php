@@ -8,11 +8,62 @@ $_SESSION["messages"]['danger'] = '<strong>Error!</strong> No journey start.';
 if(!$user) {
 	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> You are not logged in.';
 	Header('Location: /login');
+	die;
 }
 
 if($journey) {
 	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> You are already in a journey.';
 	Header('Location: /');
+	die;
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+	if(!isset($_POST['start'])) {
+		$_SESSION["messages"]['danger'] = '<strong>Error!</strong> 986.';
+		Header('Location: /');
+		die;
+	}
+	$from = $_POST['start'];
+	$stmt = $conn->prepare('SELECT * FROM `cars` WHERE `station` = :from LIMIT 1');
+	$stmt->bindParam(':from', $from);
+
+	$result = $stmt->execute();
+
+	$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+	if(!$result) {
+		$_SESSION["messages"]['danger'] = '<strong>Error!</strong> No cars from this location.';
+		Header('Location: /');
+		die;
+	}
+
+	$car = $row['id'];
+	$time = time();
+	$to = 0;
+	$end = 0;
+	$status = 0;
+	$stmt = $conn->prepare('INSERT INTO `journey` (`user`, `car`, `from`, `to`, `start`, `end`, `status`) VALUES (:user, :car, :from, :to, :time, :end, :status)');
+	$stmt->bindParam(':user', $user['id']);
+	$stmt->bindParam(':car', $car);
+	$stmt->bindParam(':from', $from);
+	$stmt->bindParam(':end', $end);
+	$stmt->bindParam(':status', $status);
+	$stmt->bindParam(':to', $to);
+	$stmt->bindParam(':time', $time);
+
+    $result = $stmt->execute();
+
+    if(!$result) {
+		$_SESSION["messages"]['danger'] = '<strong>Error!</strong> could not start journey.';
+		Header('Location: /');
+		die;
+    }
+
+    $_SESSION["messages"]['success'] = '<strong>Success!</strong> Journey started.';
+	Header('Location: /');
+	die;
 }
 
 $station = 'SELECT
