@@ -22,12 +22,20 @@
 		
 		<table class="table table-striped">
 			<tbody>
+				<tr>
+					<td>Journey ID</td>
+					<td>Price per KM</td>
+					<td>Duration</td>
+					<td>Cost</td>
+					<td>Discounted Cost (if applicable)</td>
+				</tr>
 			{foreach from=$journeys key=id item=journey}
-			  <tr>
-				<td>{$journey.id}</td>
-				<td>{$journey.price}</td>
-				<td>{$journey.duration}</td>
-			  </tr>
+				<tr>
+					<td><a href="/journeydetail?id={$journey.id}">{$journey.id}</td>
+					<td>{$journey.price}p</td>
+					<td>{$journey.duration}</td>
+					<td>£{$journey.cost|string_format:"%.2f"}</td>
+				</tr>
 			{/foreach}
 			</tbody>
 		  </table>

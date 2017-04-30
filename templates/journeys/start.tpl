@@ -5,17 +5,30 @@
 		<div class="col-md-{if $suggestions}6{else}12{/if}">
       <div class="jumbotron">
         <p><b>{$station.name}</b> {$station.count}/{$station.capacity}</p>
-        {if $suggestions}
+        {if ($station.count / $station.capacity) >= 0.75}
+				<p>Experience discount from this station!</p>
+		
+		
+		{/if}
+		{if $suggestions}
         <p>
         	{if $station.count == 0}
         		This station doesnt have any cars left.
-          
         	{else} 
         		This station doesnt have many cars left.
         	{/if}
-
+			
+			<p> 
+			  <a class="btn btn-lg btn-primary" href="#" role="button">Commence Journey</a>
+			</p>
+			
         </p>
         {/if}
+		{if ($station.count / $station.capacity) >= 0.25}
+				<p> 
+					<a class="btn btn-lg btn-primary" href="#" role="button">Commence Journey</a>
+				</p>
+				{/if}
       </div>
       		</div>
       	{if $suggestions}
@@ -27,7 +40,12 @@
 
 				{foreach from=$suggestions item=suggestion}
 			         <div><b>{$suggestion.name}</b> {$suggestion.count}/{$suggestion.capacity}</div>
+						<p> 
+							<a class="btn btn-lg btn-primary" href="#" role="button">Commence Journey</a>
+						</p>
 			      {/foreach}
+				  
+				  
 
 				
 			</div>

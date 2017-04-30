@@ -45,15 +45,22 @@ while($row = $jtmt->fetch(PDO::FETCH_ASSOC)) {
 	$journey['price'] = $row['price'];
 	
 	$time = ($row['end'] - $row['start']);
-	$mins = floor( ($time / 60) % 60);
+	$mins = ceil($time / 60);
 	
-	$journey['duration'] = $mins;
+	$hours = floor($time / (60 * 60));
+	$mins2 = floor( ($time / 60) % 60);
+	$secs = $time % 60;
 	
-	$journeys[$row['id']] = $journey;
+	
+	$journey['duration'] = "$hours h $mins2 m $secs s";
+	
+	$journey['cost'] = ($mins * $row['price']);
+	
+	$journeys[] = $journey;
 	
 }
 
-$smarty->assign('journeys', $journey);
+$smarty->assign('journeys', $journeys);
 
 // display it
 $smarty->display('account.tpl');

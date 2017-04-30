@@ -47,7 +47,7 @@ $journey = true;
 $smarty->assign('title', $config['website']['title']);
 $smarty->assign('user', $user);
 $smarty->assign('injourney', false);
-$smarty->debugging = true;
+$smarty->debugging = false;
 
 // System messages
 $messages = isset($_SESSION["messages"]) ? $_SESSION["messages"] : array() ;

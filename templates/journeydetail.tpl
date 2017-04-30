@@ -35,11 +35,9 @@
       function initMap() {
 
 				var markers = [];
-				// Create an array of alphabetical characters used to label the markers.
-				var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 				
 				var map = new google.maps.Map(document.getElementById('map'), {
-				  zoom: 11,
+				  zoom: 13,
 				  center: {lat: 50.935807, lng: -1.396226} 
 				}), directionsService = new google.maps.DirectionsService,
 				directionsDisplay = new google.maps.DirectionsRenderer({
@@ -67,8 +65,10 @@
 					  map: map,
 					  title: 'Click to zoom'
 					});
-					
-					calculateAndDisplayRoute(directionsService, directionsDisplay, marker1, marker2);
+					{/literal}
+					map.setCenter(new google.maps.LatLng(({$journey.fromLat}+{$journey.toLat})/2,({$journey.fromLng}+{$journey.toLng})/2));
+					{literal}
+					/*calculateAndDisplayRoute(directionsService, directionsDisplay, marker1, marker2);*/
 					
 					marker.addListener('click', function() {
 					  map.setZoom(15);

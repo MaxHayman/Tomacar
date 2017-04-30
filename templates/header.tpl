@@ -57,7 +57,7 @@
                   <li><a href="/register">Register</a></li>
                   {else}
 
-                  <li><a href="/account?id=1">View Account Details</a></li>
+                  <li><a href="/account">View Account Details</a></li>
                   <li><a href="/journeys">View Journeys</a></li>
                   <li role="separator" class="divider"></li>
                   
