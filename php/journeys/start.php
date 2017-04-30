@@ -18,10 +18,34 @@ if($journey) {
 }
 
 
+$station = 'SELECT
+stations.id,
+stations.`name`,
+stations.capacity,
+stations.lat,
+stations.lng,
+sum(case when cars.id IS NOT NULL then 1 else 0 end) as count
+FROM
+stations
+LEFT JOIN cars ON stations.id = cars.station
+WHERE stations.id = '.$_GET['start'].'
+LIMIT 1';
+
+$stmt = $conn->query($station);
+
+if(!$stmt) {
+	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> Invalid start.';
+	Header('Location: /');
+}
+
+$station = $stmt->fetch(PDO::FETCH_ASSOC);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$discount = 0;
 	if(isset($_POST['refer'])) {
+		$discount = 0.3;
+	} else if ($station['count'] > ($station['capacity']*0.75)) {
 		$discount = 0.3;
 	}
 
@@ -87,27 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	die;
 }
 
-$station = 'SELECT
-stations.id,
-stations.`name`,
-stations.capacity,
-stations.lat,
-stations.lng,
-sum(case when cars.id IS NOT NULL then 1 else 0 end) as count
-FROM
-stations
-LEFT JOIN cars ON stations.id = cars.station
-WHERE stations.id = '.$_GET['start'].'
-LIMIT 1';
-
-$stmt = $conn->query($station);
-
-if(!$stmt) {
-	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> Invalid start.';
-	Header('Location: /');
-}
-
-$station = $stmt->fetch(PDO::FETCH_ASSOC);
 $smarty->assign('station', $station);
 
 $suggestions = false;
