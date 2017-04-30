@@ -10,30 +10,23 @@
 		
 		
 		{/if}
-		{if $suggestions}
         <p>
         	{if $station.count == 0}
         		This station doesnt have any cars left.
-        	{else} 
+        	{else if ($station.count / $station.capacity) < 0.25} 
         		This station doesnt have many cars left.
         	{/if}
 			
-			<p> 
-			  <a class="btn btn-lg btn-primary" href="#" role="button">Commence Journey</a>
-			</p>
-			
         </p>
-        {/if}
-		{if ($station.count / $station.capacity) >= 0.25}
-				<p> 
-				<form method="POST">
+{if $station.count > 0}
+			<form method="POST">
 									<input type="hidden" name="start" value="{$station.id}">
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Commence Journey</button>
 					</form>
-				</p>
-				{/if}
       </div>
+      {/if}
       		</div>
+      
       	{if $suggestions}
 		<div class="col-md-6">
 			<div id="locations" class="jumbotron">
@@ -44,7 +37,11 @@
 				{foreach from=$suggestions item=suggestion}
 			         <div><b>{$suggestion.name}</b> {$suggestion.count}/{$suggestion.capacity}</div>
 						<p> 
-							<a class="btn btn-lg btn-primary" href="#" role="button">Commence Journey</a>
+						<form method="POST">
+									<input type="hidden" name="start" value="{$suggestion.id}">
+									<input type="hidden" name="refer" value="{$station.id}">
+								<button class="btn btn-lg btn-primary btn-block" type="submit">Commence Journey</button>
+								</form>
 						</p>
 			      {/foreach}
 				  

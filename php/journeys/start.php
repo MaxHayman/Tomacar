@@ -20,11 +20,17 @@ if($journey) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+	$discount = 0;
+	if(isset($_POST['refer'])) {
+		$discount = 0.3;
+	}
+
 	if(!isset($_POST['start'])) {
 		$_SESSION["messages"]['danger'] = '<strong>Error!</strong> 986.';
 		Header('Location: /');
 		die;
 	}
+
 	$from = $_POST['start'];
 	$stmt = $conn->prepare('SELECT * FROM `cars` WHERE `station` = :from LIMIT 1');
 	$stmt->bindParam(':from', $from);
@@ -39,12 +45,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		die;
 	}
 
+
 	$car = $row['id'];
+	$station = 0;
+    $stmt = $conn->prepare('UPDATE `cars` SET `station`=:station WHERE (`id`=:car) LIMIT 1');
+	$stmt->bindParam(':station', $station);
+	$stmt->bindParam(':car', $car);
+
+	$result = $stmt->execute();
+
+    if(!$result) {
+		$_SESSION["messages"]['danger'] = '<strong>Error!</strong> could not start car.';
+		Header('Location: /');
+		die;
+    }
+
 	$time = time();
 	$to = 0;
 	$end = 0;
 	$status = 0;
-	$stmt = $conn->prepare('INSERT INTO `journey` (`user`, `car`, `from`, `to`, `start`, `end`, `status`) VALUES (:user, :car, :from, :to, :time, :end, :status)');
+	$stmt = $conn->prepare('INSERT INTO `journey` (`user`, `car`, `from`, `to`, `start`, `end`, `status`, `discount`) VALUES (:user, :car, :from, :to, :time, :end, :status, :discount)');
 	$stmt->bindParam(':user', $user['id']);
 	$stmt->bindParam(':car', $car);
 	$stmt->bindParam(':from', $from);
@@ -52,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$stmt->bindParam(':status', $status);
 	$stmt->bindParam(':to', $to);
 	$stmt->bindParam(':time', $time);
+	$stmt->bindParam(':discount', $discount);
 
     $result = $stmt->execute();
 
