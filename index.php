@@ -42,8 +42,12 @@ users.id = :id LIMIT 1');
 	$user = false;
 }
 
+$journey = true;
+
 $smarty->assign('title', $config['website']['title']);
 $smarty->assign('user', $user);
+$smarty->assign('injourney', false);
+$smarty->debugging = true;
 
 // System messages
 $messages = isset($_SESSION["messages"]) ? $_SESSION["messages"] : array() ;
