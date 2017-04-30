@@ -20,7 +20,7 @@
 								<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
 							</div>
 							<div class="form-group">
-							<textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="2000" rows="7"></textarea>                   
+							<textarea class="form-control" type="textarea" id="message" name="message" placeholder="Message" maxlength="2000" rows="7"></textarea>                   
 							</div>
 					
 				<button type="submit" class="btn btn-primary">Submit Form</button>
