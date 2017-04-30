@@ -52,7 +52,10 @@ if($suggestions) {
 
 	$suggestions = array();
 	while($suggestion = $stmt->fetch(PDO::FETCH_ASSOC)) {
-		$suggestions[] = $suggestion;
+		//calculates whether the difference between the suggested stations is > 30%
+		if(($suggestion['count']/$suggestion['capacity'] -  $station['count']/$station['capacity']) > 0.3 ){
+			$suggestions[] = $suggestion;
+		}
 	}
 }
 

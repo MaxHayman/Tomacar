@@ -61,7 +61,7 @@ users.id = :id LIMIT 1');
 $smarty->assign('title', $config['website']['title']);
 $smarty->assign('user', $user);
 $smarty->assign('journey', $journey);
-$smarty->debugging = true;
+$smarty->debugging = false;
 
 // System messages
 $messages = isset($_SESSION["messages"]) ? $_SESSION["messages"] : array() ;
