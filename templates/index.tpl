@@ -33,7 +33,7 @@
 
       	var styles = [];
 
-      	{/literal}{if $injourney}{literal}
+      	{/literal}{if $journey}{literal}
       		styles = [
             {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
             {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -155,6 +155,19 @@
 					var label = labels[i - 1 % labels.length];
 					
 					text += "<div><b>" + label + "</b> " + element.name + "<br /><b>" + element.count + "/" + element.capacity + "</b></div>";
+
+					var count;
+
+					{/literal}{if !$journey}{literal}
+					for(count = 0; count < element.count; count++){
+						text += "<i class='fa fa-car' aria-hidden='true'></i>";
+					}
+					{/literal}{else}{literal}
+					for(count = 0; count < element.capacity - element.count; count++){
+						text += "<i class='fa fa-road' aria-hidden='true'></i>";
+					}
+					
+					{/literal}{/if}{literal}
 					var marker = new google.maps.Marker({
 					  position: {lat: parseFloat(element.lat), lng: parseFloat(element.lng)},
 					  label: label,
@@ -172,12 +185,20 @@
 					  
 					  var button = '';
 
+					  {/literal}{if $journey}{literal}
+					  if(Number(marker.count) < Number(marker.capacity)) {
+					  	button = '<a href="/journeys/end?end=' + marker.id + '" class="btn btn-primary">End Journey</a>';
+					  } else {
+					  	button = '<b>Sorry no spaces here</b>';
+					  }
+
+					  {/literal}{else}{literal}
 					  if(marker.count > 0) {
 					  	button = '<a href="/journeys/start?start=' + marker.id + '" class="btn btn-primary">Start Journey</a>';
 					  } else {
 					  	button = '<b>Sorry no cars here</b>';
 					  }
-
+					  {/literal}{/if}{literal}
 					  document.getElementById("locations").innerHTML = `
 					  	<p>
 					<b><u>` + marker.name + `</u></b>

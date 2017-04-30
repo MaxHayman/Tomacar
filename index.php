@@ -6,6 +6,7 @@ include('lib/smarty/libs/Smarty.class.php');
 // create object
 $smarty = new Smarty;
 $user = null;
+$journey = null;
 
 //db
 $host = $config['database']['host'];
@@ -16,6 +17,8 @@ $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
 
 // Logged in
 session_start();
+
+
 if(isset($_SESSION['id'])) {
 		$stmt = $conn->prepare('SELECT
 users.id,
@@ -38,15 +41,26 @@ users.id = :id LIMIT 1');
 
 	$row = $stmt->fetch(PDO::FETCH_ASSOC);
 	$user = $row;
+
+	$stmt = $conn->prepare('SELECT * FROM `journey` WHERE `user` = :id AND `status` = \'0\' LIMIT 1');
+	$stmt->bindParam(':id', $_SESSION['id']);
+
+	$result = $stmt->execute();
+
+    if(!$result) {
+		echo "Error"; die;
+	}
+
+	$journey = $stmt->fetch(PDO::FETCH_ASSOC);
+
 } else {
 	$user = false;
 }
 
-$journey = true;
 
 $smarty->assign('title', $config['website']['title']);
 $smarty->assign('user', $user);
-$smarty->assign('injourney', false);
+$smarty->assign('journey', $journey);
 $smarty->debugging = true;
 
 // System messages
