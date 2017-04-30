@@ -5,6 +5,16 @@ $_SESSION["messages"]['danger'] = '<strong>Error!</strong> No journey start.';
 	Header('Location: /');
 }
 
+if(!$user) {
+	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> You are not logged in.';
+	Header('Location: /login');
+}
+
+if($journey) {
+	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> You are already in a journey.';
+	Header('Location: /');
+}
+
 $station = 'SELECT
 stations.id,
 stations.`name`,
