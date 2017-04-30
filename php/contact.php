@@ -1,5 +1,6 @@
 <?php
-
+var_dump($_POST);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$stmt = $conn->prepare('INSERT INTO 
 		`messages` 
 		(`name`, `email`, `mobile`, `subject`, `message`)
@@ -13,6 +14,9 @@
 		$stmt->bindParam(':message', $_POST['message']);
 		
 	    $result = $stmt->execute();
-
+		var_dump ($conn->errorInfo());
+		var_dump( $result);
+echo "POST";die;
+}
 // display it
 $smarty->display('contact.tpl');
