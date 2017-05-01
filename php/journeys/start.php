@@ -137,10 +137,12 @@ if($suggestions) {
 		//calculates whether the difference between the suggested stations is > 30%
 		if(($suggestion['count']/$suggestion['capacity'] -  $station['count']/$station['capacity']) > 0.3 ){
 			$suggestions[] = $suggestion;
+			
 		}
 	}
 }
 
+$smarty->assign('to',15);
 $smarty->assign('suggestions', $suggestions);
 
 // display it

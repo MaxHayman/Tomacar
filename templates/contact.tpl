@@ -8,19 +8,19 @@
 				<br style="clear:both">
 							<h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>
 							<div class="form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+								<input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{$user.firstName} {$user.lastName}"required>
 							</div>
 							<div class="form-group">
-								<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{$user.email}" required>
 							</div>
 							<div class="form-group">
-								<input type="number" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+								<input type="int" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
 							</div>
 							<div class="form-group">
 								<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
 							</div>
 							<div class="form-group">
-							<textarea class="form-control" type="textarea" id="message" name="message" placeholder="Message" maxlength="2000" rows="7"></textarea>                   
+							<textarea class="form-control" type="textarea" id="message" name="message" placeholder="Enter Your Message Here" maxlength="2000" rows="7" required></textarea>                   
 							</div>
 					
 				<button type="submit" class="btn btn-primary">Submit Form</button>

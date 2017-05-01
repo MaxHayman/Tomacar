@@ -1,5 +1,20 @@
 <?php
-var_dump($_POST);
+
+$stmt = $conn->query('SELECT
+users.id,
+users.email,
+users.`password`,
+users.firstName,
+users.lastName
+FROM
+users
+WHERE
+users.id = $_GET[id]
+LIMIT 1
+');
+
+$users = array();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$stmt = $conn->prepare('INSERT INTO 
 		`messages` 
@@ -14,9 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$stmt->bindParam(':message', $_POST['message']);
 		
 	    $result = $stmt->execute();
-		var_dump ($conn->errorInfo());
-		var_dump( $result);
-echo "POST";die;
+		
+		$_SESSION["messages"]['success'] = '<strong>Success!</strong> Your message has been sent. The admin will reply to you as soon as possible.';
+
+		Header('Location: /');
+
 }
 // display it
 $smarty->display('contact.tpl');

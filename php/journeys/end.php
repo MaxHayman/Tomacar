@@ -21,6 +21,13 @@ if(!$journey) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$id = $journey['id'];
+	
+	
+	$stmt = $conn->prepare('SELECT journey.discount FROM journey');
+	$discount = $journey['discount'];
+	if(isset($_POST['refer'])) {
+		$discount = $discount + 0.3;
+	}
 
 	if(!isset($_POST['end'])) {
 		$_SESSION["messages"]['danger'] = '<strong>Error!</strong> 987.';
@@ -86,9 +93,9 @@ if(!$stmt) {
 $station = $stmt->fetch(PDO::FETCH_ASSOC);
 $smarty->assign('station', $station);
 
-/*
+
 $suggestions = false;
-if($station['count'] < ($station['capacity']*0.3)) {
+if(($station['capacity'] - $station['count']) / $station['capacity'] <= 0.3) {
 	$suggestions = true;
 }
 
@@ -101,7 +108,7 @@ if($suggestions) {
 	FROM
 	stations s
 	LEFT JOIN cars ON cars.station = s.id
-	WHERE s.id <> '.$_GET['start'].'
+	WHERE s.id <> '.$_GET['end'].'
 	GROUP BY
 	s.id
 	HAVING distance < 0.6
@@ -112,14 +119,15 @@ if($suggestions) {
 	$suggestions = array();
 	while($suggestion = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		//calculates whether the difference between the suggested stations is > 30%
-		if(($suggestion['count']/$suggestion['capacity'] -  $station['count']/$station['capacity']) > 0.3 ){
+		if(($suggestion['capacity'] - $suggestion['count'])/$suggestion['capacity'] - ($station['capacity'] - $station['count']) / ($station['capacity']) > 0.3 ){
 			$suggestions[] = $suggestion;
 		}
 	}
 }
 
+$smarty->assign('to',15);
 $smarty->assign('suggestions', $suggestions);
-*/
+
 
 // display it
 $smarty->display('journeys/end.tpl');
