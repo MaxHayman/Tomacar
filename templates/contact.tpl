@@ -8,10 +8,10 @@
 				<br style="clear:both">
 							<h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>
 							<div class="form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{$user.firstName} {$user.lastName}"required>
+								<input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{if $user}{$user.firstName} {$user.lastName}{/if}" required>
 							</div>
 							<div class="form-group">
-								<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{$user.email}" required>
+								<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{if $user}{$user.email}{/if}" required>
 							</div>
 							<div class="form-group">
 								<input type="int" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
