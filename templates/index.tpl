@@ -154,12 +154,24 @@
 					var count;
 
 					{/literal}{if !$journey || !$user}{literal}
-					for(count = 0; count < element.count; count++){
-						text += "<i class='fa fa-car fa-fw' aria-hidden='true'></i>";
+					for(count = 0; count < element.high; count++){
+						text += "<i class='fa fa-car fa-fw' style='color:green;' aria-hidden='true'></i>";
+					}
+					for(count = 0; count < element.medium; count++){
+						text += "<i class='fa fa-car fa-fw' style='color:yellow;' aria-hidden='true'></i>";
+					}
+					for(count = 0; count < element.low; count++){
+						text += "<i class='fa fa-car fa-fw' style='color:red;' aria-hidden='true'></i>";
 					}
 					{/literal}{else}{literal}
-					for(count = 0; count < element.capacity - element.count; count++){
-						text += "<i class='fa fa-road fa-fw' aria-hidden='true'></i>";
+					for(count = 0; count < element.high; count++){
+						text += "<i class='fa fa-car fa-fw' style='color:green;' aria-hidden='true'></i>";
+					}
+					for(count = 0; count < element.medium; count++){
+						text += "<i class='fa fa-car fa-fw' style='color:yellow;' aria-hidden='true'></i>";
+					}
+					for(count = 0; count < element.low; count++){
+						text += "<i class='fa fa-car fa-fw' style='color:red;' aria-hidden='true'></i>";
 					}
 					text += "<br>";
 					
