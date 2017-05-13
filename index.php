@@ -15,6 +15,37 @@ $pass = $config['database']['pass'];
 $db = $config['database']['db'];
 $conn = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
 
+//Tidy
+if(rand(1,10) == 10) {
+	$stmt = $conn->prepare('
+	SELECT *
+	FROM
+	cars
+	WHERE
+	cars.station <> 0');
+
+	$result = $stmt->execute();
+
+	while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		$start = $row['lastCharged'];
+		$end = time();
+
+		$diff = $end - $start;
+	    $amount = ($diff / 60) * 0.5;
+
+	     $stmt2 = $conn->prepare('UPDATE `cars` SET `charge` = LEAST(100, charge + :charge), `lastCharged` = :lastCharged WHERE (`id`=:car) LIMIT 1');
+	    $stmt2->bindParam(':lastCharged', $end);
+		$stmt2->bindParam(':car', $row['id']);
+		$stmt2->bindParam(':charge', $amount);
+
+		$result = $stmt2->execute();
+
+	    if(!$result) {
+			echo "Could not update cars";
+			die;
+	    }
+	}
+}
 // Logged in
 session_start();
 
