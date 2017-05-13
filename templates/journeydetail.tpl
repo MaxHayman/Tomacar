@@ -11,7 +11,6 @@
 			<th>Start</th>
 			<th>End</th>
 			<th>Duration</th>
-			<th>Cost</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -23,7 +22,6 @@
 			<td>{$journey.start|date_format:"%c"}</td>
 			<td>{$journey.end|date_format:"%c"}</td>
 			<td>{$journey.duration}</td>
-			<td></td>
 		  </tr>
 		</tbody>
 	  </table>

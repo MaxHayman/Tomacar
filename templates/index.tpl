@@ -16,11 +16,6 @@
 		<div class="col-md-4">
 			<div id="locations" class="jumbotron">
 				<p><b>Loading...</b>
-				{foreach from=$stations key=count item=count}
-					<tr>
-						<td><a href="/journeys/start?start={$count}"><img src="/images/carbutton.jpg"></a></td>
-					</tr>
-				{/foreach}
 				</p>
 				
 			</div>
@@ -154,18 +149,19 @@
 				$.each(data, function(i, element) {
 					var label = labels[i - 1 % labels.length];
 					
-					text += "<div><b>" + label + "</b> " + element.name + "<br /><b>" + element.count + "/" + element.capacity + "</b></div>";
+					text += "<div><br><b>" + label + "</b> " + element.name + "<br /></div>";
 
 					var count;
 
 					{/literal}{if !$journey || !$user}{literal}
 					for(count = 0; count < element.count; count++){
-						text += "<i class='fa fa-car' aria-hidden='true'></i>";
+						text += "<i class='fa fa-car fa-fw' aria-hidden='true'></i>";
 					}
 					{/literal}{else}{literal}
 					for(count = 0; count < element.capacity - element.count; count++){
-						text += "<i class='fa fa-road' aria-hidden='true'></i>";
+						text += "<i class='fa fa-road fa-fw' aria-hidden='true'></i>";
 					}
+					text += "<br>";
 					
 					{/literal}{/if}{literal}
 					var marker = new google.maps.Marker({
@@ -197,6 +193,7 @@
 					  	button = '<a href="/journeys/start?start=' + marker.id + '" class="btn btn-primary">Start Journey</a>';
 					  } else {
 					  	button = '<b>Sorry no cars here</b>';
+						button = '<a href="/journeys/start?start=' + marker.id + '" class="btn btn-primary">Be Redirected</a>';
 					  }
 					  {/literal}{/if}{literal}
 					  document.getElementById("locations").innerHTML = `

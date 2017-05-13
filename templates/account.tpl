@@ -24,17 +24,18 @@
 			<tbody>
 				<tr>
 					<td>Journey ID</td>
-					<td>Price per KM</td>
 					<td>Duration</td>
 					<td>Cost</td>
 					<td>Discounted Cost (if applicable)</td>
+					<td>Discount Experienced</td>
 				</tr>
 			{foreach from=$journeys key=id item=journey}
 				<tr>
 					<td><a href="/journeydetail?id={$journey.id}">{$journey.id}</td>
-					<td>{$journey.price}p</td>
 					<td>{$journey.duration}</td>
 					<td>£{$journey.cost|string_format:"%.2f"}</td>
+					<td>£{$journey.dcost|string_format:"%.2f"}</td>
+					<td>£{$journey.damount|string_format:"%.2f"} - {$journey.dpercent}%</td>
 				</tr>
 			{/foreach}
 			</tbody>

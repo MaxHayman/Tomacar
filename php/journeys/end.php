@@ -21,12 +21,12 @@ if(!$journey) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$id = $journey['id'];
-	
-	
-	$stmt = $conn->prepare('SELECT journey.discount FROM journey');
 	$discount = $journey['discount'];
+	
 	if(isset($_POST['refer'])) {
-		$discount = $discount + 0.3;
+		$discount = $discount + 0.25;
+	} else if (($station['count']) <= ($station['capacity']*0.3)) {
+		$discount = $discount + 0.25;
 	}
 
 	if(!isset($_POST['end'])) {
@@ -37,11 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$status = 1;
 	$time = time();
-	$stmt = $conn->prepare('UPDATE `journey` SET `to` = :station, `end`= :time, `status`= :status WHERE (`id`=:id) LIMIT 1');
+	$stmt = $conn->prepare('UPDATE `journey` SET `to` = :station, `end`= :time, `status`= :status, `discount`= :discount WHERE (`id`=:id) LIMIT 1');
 	$stmt->bindParam(':status', $status);
 	$stmt->bindParam(':id', $id);
 	$stmt->bindParam(':time', $time);
 	$stmt->bindParam(':station', $_POST['end']);
+	$stmt->bindParam(':discount', $discount);
 
     $result = $stmt->execute();
 

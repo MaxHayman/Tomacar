@@ -27,6 +27,7 @@ $jtmt = $conn->query('SELECT
 journey.id,
 journey.`start`,
 journey.`end`,
+journey.`discount`,
 cars.price
 FROM
 users
@@ -43,6 +44,7 @@ while($row = $jtmt->fetch(PDO::FETCH_ASSOC)) {
 
 	$journey['id']= $row['id'];
 	$journey['price'] = $row['price'];
+	$journey['discount'] = $row['discount'];
 	
 	$time = ($row['end'] - $row['start']);
 	$mins = ceil($time / 60);
@@ -53,8 +55,10 @@ while($row = $jtmt->fetch(PDO::FETCH_ASSOC)) {
 	
 	
 	$journey['duration'] = "$hours h $mins2 m $secs s";
-	
 	$journey['cost'] = ($mins * $row['price']);
+	$journey['damount'] = ($journey['cost'] * $journey['discount']);
+	$journey['dpercent'] = ($journey['discount'] * 100);
+	$journey['dcost'] = ($journey['cost'] - $journey['damount']); 
 	
 	$journeys[] = $journey;
 	

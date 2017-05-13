@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$discount = 0;
 	if(isset($_POST['refer'])) {
-		$discount = 0.3;
-	} else if ($station['count'] > ($station['capacity']*0.75)) {
-		$discount = 0.3;
+		$discount = 0.25;
+	} else if ($station['count'] >= ($station['capacity']*0.7)) {
+		$discount = 0.25;
 	}
 
 	if(!isset($_POST['start'])) {
@@ -114,9 +114,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $smarty->assign('station', $station);
 
 $suggestions = false;
-if($station['count'] < ($station['capacity']*0.3)) {
+if($station['count'] <= ($station['capacity']*0.3)) {
 	$suggestions = true;
-}
+} 
 
 if($suggestions) {
 	$closest = 'SELECT s.name, s.id, s.lat, s.lng, SQRT(

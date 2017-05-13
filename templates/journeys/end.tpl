@@ -6,10 +6,10 @@
         <p class="text-center"><b>{$station.name}</b></p>
 			<div class="text-center">
 				{for $count=1 to $to max={$station.capacity - $station.count}}
-					<i class='fa fa-road' aria-hidden='true'></i>
+					<i class='fa fa-road fa-fw' aria-hidden='true'></i>
 				{/for}
 			</div>
-        {if (($station.capacity - $station.count) / $station.capacity) >= 0.75}
+        {if (($station.capacity - $station.count) / $station.capacity) >= 0.7}
 				<p class="text-center">Experience discount returning to this station!</p>
 		
 		
@@ -17,7 +17,7 @@
         <p>
         	{if $station.capacity - $station.count == 0}
         		This station doesnt have any spaces left.
-        	{else if (($station.capacity - $station.count) / $station.capacity) <= 0.25} 
+        	{else if (($station.capacity - $station.count) / $station.capacity) <= 0.3} 
         		This station doesnt have many spaces left.
         	{/if}
 			
@@ -42,12 +42,13 @@
 			        <div class="text-center"><b>{$suggestion.name}</b></div>
 					<div class="text-center">
 						{for $count=1 to $to max={$suggestion.capacity - $suggestion.count}}
-							<i class='fa fa-road' aria-hidden='true'></i>
+							<i class='fa fa-road fa-fw' aria-hidden='true'></i>
 						{/for}
 					</div>
 					<p> 
 						<form method="POST">
 							<input type="hidden" name="end" value="{$suggestion.id}">
+							<input type="hidden" name="refer" value="{$station.id}">
 							<button class="btn btn-lg btn-primary btn-block" type="submit">End Journey</button>
 						<form>
 					</p>
