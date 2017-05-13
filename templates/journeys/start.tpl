@@ -6,9 +6,16 @@
 			<div class="jumbotron">
 				<p class="text-center"><b>{$station.name}</b></p>
 				<div class="text-center">
-					{for $count=1 to $to max={$station.count}}
-						<i class='fa fa-car fa-fw' aria-hidden='true'></i>
+					{for $count=1 to $station.high}
+						<i class='fa fa-car fa-fw' style='color:green;' aria-hidden='true'></i>
 					{/for}
+					{for $count=1 to $station.medium}
+						<i class='fa fa-car fa-fw' style='color:yellow;' aria-hidden='true'></i>
+					{/for}
+					{for $count=1 to $station.low}
+						<i class='fa fa-car fa-fw' style='color:red;' aria-hidden='true'></i>
+					{/for}
+
 				</div>
 			
         {if ($station.count / $station.capacity) >= 0.7}
@@ -44,8 +51,14 @@
 				{foreach from=$suggestions item=suggestion}
 			         <div class="text-center"><b>{$suggestion.name}</b></div>
 						<div class="text-center">
-							{for $count=1 to $to max={$suggestion.count}}
-								<i class='fa fa-car fa-fw' aria-hidden='true'></i>
+							{for $count=1 to $suggestion.high}
+								<i class='fa fa-car fa-fw' style='color:green;' aria-hidden='true'></i>
+							{/for}
+							{for $count=1 to $suggestion.medium}
+								<i class='fa fa-car fa-fw' style='color:yellow;' aria-hidden='true'></i>
+							{/for}
+							{for $count=1 to $suggestion.low}
+								<i class='fa fa-car fa-fw' style='color:red;' aria-hidden='true'></i>
 							{/for}
 						</div>
 						<p> 
