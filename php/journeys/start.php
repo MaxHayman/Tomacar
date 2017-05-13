@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	$from = $_POST['start'];
-	$stmt = $conn->prepare('SELECT * FROM `cars` WHERE `station` = :from LIMIT 1');
+	$stmt = $conn->prepare('SELECT * FROM `cars` WHERE `station` = :from ORDER BY cars.charge DESC LIMIT 1');
 	$stmt->bindParam(':from', $from);
 
 	$result = $stmt->execute();

@@ -18,6 +18,30 @@ if(!$journey) {
 		die;
 }
 
+
+$station = 'SELECT
+stations.id,
+stations.`name`,
+stations.capacity,
+stations.lat,
+stations.lng,
+sum(case when cars.id IS NOT NULL then 1 else 0 end) as count
+FROM
+stations
+LEFT JOIN cars ON stations.id = cars.station
+WHERE stations.id = '.$_GET['end'].'
+LIMIT 1';
+
+$stmt = $conn->query($station);
+
+if(!$stmt) {
+	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> Invalid end.';
+	Header('Location: /');
+}
+
+$station = $stmt->fetch(PDO::FETCH_ASSOC);
+$smarty->assign('station', $station);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$id = $journey['id'];
@@ -52,9 +76,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		die;
     }
 
-    $stmt = $conn->prepare('UPDATE `cars` SET `station`=:station WHERE (`id`=:car) LIMIT 1');
+    // Calculate charge - 0.5% /min
+    $start = $journey['start'];
+    $end = $time;
+    $diff = $end - $start;
+    $amount = ($diff / 60) * 0.5;
+
+    $stmt = $conn->prepare('UPDATE `cars` SET `station`=:station, `charge` = GREATEST(0, charge - :charge)WHERE (`id`=:car) LIMIT 1');
 	$stmt->bindParam(':station', $_POST['end']);
 	$stmt->bindParam(':car', $journey['car']);
+	$stmt->bindParam(':charge', $amount);
 
 	$result = $stmt->execute();
 
@@ -64,35 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		die;
     }
 
-
     $_SESSION["messages"]['success'] = '<strong>Success!</strong> Journey complete.';
 	Header('Location: /');
 	die;
 }
-
-
-$station = 'SELECT
-stations.id,
-stations.`name`,
-stations.capacity,
-stations.lat,
-stations.lng,
-sum(case when cars.id IS NOT NULL then 1 else 0 end) as count
-FROM
-stations
-LEFT JOIN cars ON stations.id = cars.station
-WHERE stations.id = '.$_GET['end'].'
-LIMIT 1';
-
-$stmt = $conn->query($station);
-
-if(!$stmt) {
-	$_SESSION["messages"]['danger'] = '<strong>Error!</strong> Invalid end.';
-	Header('Location: /');
-}
-
-$station = $stmt->fetch(PDO::FETCH_ASSOC);
-$smarty->assign('station', $station);
 
 
 $suggestions = false;
