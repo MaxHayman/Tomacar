@@ -24,7 +24,10 @@ stations.`name`,
 stations.capacity,
 stations.lat,
 stations.lng,
-sum(case when cars.id IS NOT NULL then 1 else 0 end) as count
+sum(case when cars.id IS NOT NULL then 1 else 0 end) as count,
+sum(case when cars.charge >= 75 then 1 else 0 end) as high,
+sum(case when cars.charge >= 50 AND cars.charge < 75 then 1 else 0 end) as medium,
+sum(case when cars.charge < 50  then 1 else 0 end) as low
 FROM
 stations
 LEFT JOIN cars ON stations.id = cars.station
@@ -123,6 +126,9 @@ if($suggestions) {
 	    POW(69.1 * (lat - '.$station['lat'].'), 2) +
 	    POW(69.1 * ('.$station['lng'].' - lng) * COS(lat / 57.3), 2)) AS distance,
 	sum(case when cars.id IS NOT NULL then 1 else 0 end) as count,
+	sum(case when cars.charge >= 75 then 1 else 0 end) as high,
+	sum(case when cars.charge >= 50 AND cars.charge < 75 then 1 else 0 end) as medium,
+	sum(case when cars.charge < 50  then 1 else 0 end) as low,
 	s.capacity
 	FROM
 	stations s
